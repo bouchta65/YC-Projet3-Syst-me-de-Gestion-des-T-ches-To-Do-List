@@ -102,74 +102,25 @@
         
        <div class="lg:grid grid-cols-3  gap-4 mb-4">
 
-                <!-- <h1 class="font-bold text-4xl  font bg-gray-900">To Do Liste </h1> -->
                     <div class="bg-white shadow ">
-                        <div class="max-w-sm mx-auto bg-red-50 sm:px-6 sm:rounded-t-md" >
+                        <div class="max-w-sm mx-auto bg-red-50 sm:px-6 rounded-t" >
                             <div class=" py-3 " >
                                 <h3 class="p-2 font-bold text-2xl leading-6  text-gray-900">To Do Liste</h3>
                             </div>
                         </div>
-                    <ul class="bg-white   max-w-sm mx-auto h-96 overflow-y-auto ">
-        
-                        
-        
-                        <li class="border-t border-gray-200">
-                            <div class="px-4 py-5 sm:px-6">
-                                <div class="flex items-center justify-between">
-                                    <h3 class="text-lg leading-6 font-medium text-gray-900">Item 3</h3>
-                                    <p class="mt-1 max-w-2xl text-sm text-gray-500">Description for Item 3</p>
-                                </div>
-                                <div class="mt-4 flex items-center justify-between">
-                                    <p class="text-sm font-medium text-gray-500">Status: <span class="text-yellow-600">Pending</span></p>
-                                    <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Edit</a>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="border-t border-gray-200">
-                            <div class="px-4 py-5 sm:px-6">
-                                <div class="flex items-center justify-between">
-                                    <h3 class="text-lg leading-6 font-medium text-gray-900">Item 3</h3>
-                                    <p class="mt-1 max-w-2xl text-sm text-gray-500">Description for Item 3</p>
-                                </div>
-                                <div class="mt-4 flex items-center justify-between">
-                                    <p class="text-sm font-medium text-gray-500">Status: <span class="text-red-500">Pending</span></p>
-                                    <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Edit</a>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="border-t border-gray-200">
-                            <div class="px-4 py-5 sm:px-6">
-                                <div class="flex items-center justify-between">
-                                    <h3 class="text-lg leading-6 font-medium text-gray-900">Item 3</h3>
-                                    <p class="mt-1 max-w-2xl text-sm text-gray-500">Description for Item 3</p>
-                                </div>
-                                <div class="mt-4 flex items-center justify-between">
-                                    <p class="text-sm font-medium text-gray-500">Status: <span class="text-yellow-600">Pending</span></p>
-                                    <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Edit</a>
-                                </div>
-                            </div>
-                        </li>
-                     
+                    
+                    <ul id="tachesCard" class="bg-white   max-w-sm mx-auto h-96 overflow-y-auto "> 
+                   
+                
                     </ul> 
                     <div class="max-w-sm mx-auto sm:px-6 sm:rounded-b-md hover:bg-gray-100" >
                       
-                        <button id="ajoutTacheToDo" class=" p-1 font-bold  leading-6  text-gray-900">
+                        <button id="ajoutTacheToDo" class=" p-1 font-bold max-w-sm leading-6  text-gray-900">
                             Ajouter une tâche
                         </button>
                     </div>
-                    
-                    
-        
                 </div>
-       
-
-
-
-
-
-
-
-    </div>
+         </div>
 
 
             
@@ -197,11 +148,11 @@
                   <div class="grid gap-4 mb-4 grid-cols-2">
                       <div class="col-span-2">
                           <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nom de tâche</label>
-                          <input type="text" name="name" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Type product name" required="">
+                          <input type="text" name="name" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Nom de tâche" required="">
                       </div>
                       <div class="col-span-2 sm:col-span-1">
                           <label for="price" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Date de tâche</label>
-                          <input type="number" name="price" id="price" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="$2999" required="">
+                          <input type="date" name="price" id="price" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Date de tâche" required="">
                       </div>
                       <div class="col-span-2 sm:col-span-1">
                           <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Status</label>
@@ -211,11 +162,24 @@
                               <option value="PC">Done</option>
                           </select>
                       </div>
-                      <div class="col-span-2">
-                          <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
-                          <textarea id="description" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write product description here"></textarea>                    
-                      </div>
+                 
+                      
                   </div>
+                  <div class="col-span-2 sm:col-span-1">
+                    <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Priorité</label>
+                    <select id="statusTask" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                        <option selected="">P1</option>
+                        <option value="P2">P2</option>
+                        <option value="P3">P3</option>
+                    </select>
+                </div>
+
+                  <div class="col-span-2">
+                    <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
+                    <textarea id="description" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="description de tâche"></textarea>                    
+                </div>
+              
+                <br>
                   <button type="submit" class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                       <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
                       Ajouter votre tâche
@@ -256,7 +220,7 @@
         </div>
     </footer>
     <script src="scryptAll.js"></script>
-    <script src="todoliste.js"></script>
+    <script  src="todoliste.js"></script>
 
 
  </div>
