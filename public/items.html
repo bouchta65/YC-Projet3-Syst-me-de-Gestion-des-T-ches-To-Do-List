@@ -66,7 +66,7 @@
                    <path d="m17.418 3.623-.018-.008a6.713 6.713 0 0 0-2.4-.569V2h1a1 1 0 1 0 0-2h-2a1 1 0 0 0-1 1v2H9.89A6.977 6.977 0 0 1 12 8v5h-2V8A5 5 0 1 0 0 8v6a1 1 0 0 0 1 1h8v4a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-4h6a1 1 0 0 0 1-1V8a5 5 0 0 0-2.582-4.377ZM6 12H4a1 1 0 0 1 0-2h2a1 1 0 0 1 0 2Z"/>
                 </svg>
                 <span class="flex-1 ms-3 whitespace-nowrap">My Items</span>
-                <span class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">5</span>
+                <span id="countTaches" class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300"><script>dataOfTach.length</script></span>
              </a>
           </li>
 
@@ -143,11 +143,21 @@
         </select>
     </div>
     
+    
+</div>
+<div class="mb-5">
+    <label for="browser" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Priorité</label>
+    <select id="preioriteTache" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+        <option selected="">P1</option>
+        <option value="P2">P2</option>
+        <option value="P3">P3</option>
+    </select>
 </div>
 <div class="mb-5">
     <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
     <textarea id="descriptionTache" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="Entrer le Description de votre tâche" required id=""></textarea>
   </div>
+  
 <div class="flex items-start mb-5">
   
   </div>
@@ -173,6 +183,9 @@
                     </th>
                     <th scope="col" class="px-6 py-3">
                         Description
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Priorité
                     </th>
                     <th scope="col" class="px-6 py-3">
                         Action
@@ -214,7 +227,8 @@
         </div>
     </footer>
     <script src="scryptAll.js"></script>
-    <script src="taches.js"></script>
+    <script  src="taches.js"></script>
+
 
 
  </div>
