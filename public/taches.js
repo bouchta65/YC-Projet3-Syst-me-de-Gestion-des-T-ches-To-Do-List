@@ -26,9 +26,10 @@ let nom = document.querySelector("#nomTache");
 let dateTache = document.querySelector("#dateTache");
 let statue = document.querySelector("#statueTache");
 let description = document.querySelector("#descriptionTache");
+let preioriteTache = document.querySelector("#preioriteTache");
 let mood = "create";
 let tmpI;
-// Initialize dataOfTach with tasks from local storage if available
+
 let dataOfTach = [];
 
 
@@ -39,19 +40,22 @@ if(localStorage.tache != null){
     dataOfTach = [];
 }
 
+
 document.querySelector("#formTache").addEventListener('submit' , function(e){
         e.preventDefault(); 
     let tache = {
         nom: nom.value,
         dateTache: dateTache.value,
         statue: statue.value,
-        description: description.value
+        description: description.value,
+        preioriteTache:preioriteTache.value
     };
     if(mood === "create"){
         // Add a new task 
         dataOfTach.push(tache);   
     }else{
         dataOfTach[tmpI] = tache
+        buttonAjouteTache.innerHTML = "Ajouter votre tâche";
     }
   
 
@@ -61,9 +65,9 @@ document.querySelector("#formTache").addEventListener('submit' , function(e){
 
     clearData();
     showData();
+    contTach()
 
 });
-
 function clearData(){
     nom.value = '';
     dateTache.value = '';
@@ -88,9 +92,12 @@ function showData(){
     <td class="px-6 py-4">
     ${dataOfTach[i].description}
     </td>
+      <td class="px-6 py-4 ${dataOfTach[i].preioriteTache === "P1" ? 'text-red-600' : dataOfTach[i].preioriteTache === "P2" ? 'text-blue-600' : dataOfTach[i].preioriteTache === "P3" ? 'text-yellow-600' : ''}">
+    ${dataOfTach[i].preioriteTache}
+    </td>
     <td class="flex items-center px-6 py-4">
-        <a href="#" onClick="updateData(${i})" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-        <a href="#" onClick="deleteData(${i})" class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">Remove</a>
+        <a href="#" onClick="updateData(${i})" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Modifier</a>
+        <a href="#" onClick="deleteData(${i})" class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">Supprimer</a>
     </td>
 </tr>`
 }
@@ -103,6 +110,7 @@ function deleteData(i){
 dataOfTach.splice(i,1);
 localStorage.tache = JSON.stringify(dataOfTach)
 showData();
+contTach()
 }
 
 function updateData(i){
@@ -115,4 +123,17 @@ function updateData(i){
     tmpI = i;
     
 }
+function contTach(){
+    let countTaches = document.querySelector("#countTaches")    
+    countTaches.innerHTML = dataOfTach.length
+}
+
+
 showData()
+contTach()
+
+
+
+
+
+
