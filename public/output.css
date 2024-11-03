@@ -1504,8 +1504,27 @@ video {
   --tw-text-opacity: 1;
   color: rgb(17 24 39 / var(--tw-text-opacity));
 }
+#default-sidebar {
+  transform: translateX(-100%); /* Hide sidebar by default */
+  transition: transform 0.3s ease; /* Smooth transition for sliding effect */
+}
+
+/* When sidebar is shown */
+#default-sidebar.show {
+  transform: translateX(0); /* Show the sidebar */
+}
+
+/* Media Query for mobile devices */
+@media (min-width: 640px) {
+  #default-sidebar {
+      transform: translateX(0); /* Always show on larger screens */
+  }
+}
+
 
 @media (min-width: 640px) {
+
+
   .sm\:col-span-1 {
     grid-column: span 1 / span 1;
   }
