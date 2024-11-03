@@ -1,5 +1,7 @@
 window.onload = function() {
     includData(dataOfTach);
+ 
+  
 };
 
 
@@ -11,15 +13,23 @@ let preioriteTache = document.querySelector("#preioriteTache");
 let mood = "create";
 let tmpI;
 document.querySelector("#ajoutTache").addEventListener('click', () => {
-    const tacheModal = document.querySelector("#ajouteTacheModal");
-    tacheModal.classList.toggle("hidden");
+    document.querySelector("#overlay").classList.remove("hidden");
+    document.querySelector("#ajouteTacheModal").classList.remove("hidden");
 });
 
 document.querySelector("#buttonClose").addEventListener('click', () => {
-    const tacheModal = document.querySelector("#ajouteTacheModal");
-    tacheModal.classList.add("hidden");
-    console.log("good");
+    document.querySelector("#overlay").classList.add("hidden");
+    document.querySelector("#ajouteTacheModal").classList.add("hidden");
+    location.reload();
 });
+
+document.querySelector("#overlay").addEventListener('click', () => {
+    document.querySelector("#overlay").classList.add("hidden");
+});
+
+
+
+
 
 let dataOfTach = JSON.parse(localStorage.getItem("tache")) || [];
 
@@ -47,7 +57,7 @@ function includData(taskData) {
                 break;
         }
 
-        let tableT = `<li class="border-t border-gray-200">
+        let tableT = `<li draggable="true" class="border-t border-gray-200 li-class" data-index="${i}">
                         <div class="flex items-center px-4 py-5 sm:px-6">
                             <div class="w-1 h-12 ${priorityColor}"></div>
                             <div class="ml-2 w-full"> 
@@ -58,7 +68,7 @@ function includData(taskData) {
                                 <div class="mt-4 flex items-center justify-between w-full"> 
                                     <p class="text-sm font-medium text-gray-500">Priorité: <span class="${priorityClass}">${taskData[i].preioriteTache}</span></p>
                                     <div class="flex items-center space-x-3"> 
-                                        <a href="#" class="text-indigo-600 hover:text-indigo-500 flex items-center" onclick="updateData(${i})">
+                                        <a id="buttonUpdate' href="#" class="text-indigo-600 hover:text-indigo-500 flex items-center" onclick="updateData(${i})">
                                             <i class="fas fa-edit fa-lg"></i> 
                                         </a>
                                         <a href="#" class="text-red-600 hover:text-red-500 flex items-center" onclick="deleteData(${i})">
@@ -71,7 +81,7 @@ function includData(taskData) {
                     </li>`;
 
 
-        if (taskData[i].statue === "To DO") {
+        if (taskData[i].statue === "ToDO") {
             TODO += tableT;
         } else if (taskData[i].statue === "Doing") {
             DOING += tableT;
@@ -83,14 +93,14 @@ function includData(taskData) {
     document.querySelector("#tachesTodo").innerHTML = TODO;
     document.querySelector("#tachesDoing").innerHTML = DOING;
     document.querySelector("#tachesDone").innerHTML = DONE;
+    draginDrop();
 }
 
 
 
-
-
+let titreModal = document.querySelector("#titreModall");
 document.querySelector("#buttonAjouteTache").addEventListener('click', () => {
-
+    
     let tache = {
         nom: nom.value,
         dateTache: dateTache.value,
@@ -104,6 +114,8 @@ document.querySelector("#buttonAjouteTache").addEventListener('click', () => {
     } else {
         dataOfTach[tmpI] = tache;
         buttonAjouteTache.innerHTML = "Ajouter votre tâche";
+        titreModal.innerText = "Ajouter de tâche ";
+        
     }
 
     localStorage.setItem('tache', JSON.stringify(dataOfTach));
@@ -111,9 +123,10 @@ document.querySelector("#buttonAjouteTache").addEventListener('click', () => {
 
   
     includData(dataOfTach);
-    contTach()
+    contTach(dataOfTach)
     clearData();
     location.reload();
+    
 });
 
 function clearData() {
@@ -122,22 +135,24 @@ function clearData() {
     statue.value = '';
     description.value = '';
 }
-
 function deleteData(i) {
     dataOfTach.splice(i, 1);
     localStorage.setItem('tache', JSON.stringify(dataOfTach)); 
     includData(dataOfTach); 
+    contTach(dataOfTach);
 }
 
 function updateData(i) {
     const tacheModal = document.querySelector("#ajouteTacheModal");
     tacheModal.classList.toggle("hidden");
+    document.querySelector("#overlay").classList.remove("hidden");
     nom.value = dataOfTach[i].nom;
     dateTache.value = dataOfTach[i].dateTache;
     statue.value = dataOfTach[i].statue;
     description.value = dataOfTach[i].description;
     preioriteTache.value = dataOfTach[i].preioriteTache;
     buttonAjouteTache.innerHTML = "Mise a jour votre tâche";
+    titreModal.innerText = "Mise a jour de tâche";
     mood = "update";
     tmpI = i;
 }
@@ -145,28 +160,170 @@ function updateData(i) {
 
 
 
-
-
-
-
-
-
-
 document.querySelector("#recherchebut").addEventListener('click',()=>{
     let rechercherTach = document.querySelector("#rechercheTache").value;
     let result = [];
-    for(i=0;i<dataOfTach.length;i++){
+    for(let i=0;i<dataOfTach.length;i++){
         if (dataOfTach[i].nom.toLowerCase().includes(rechercherTach.toLowerCase())){
             result.push(dataOfTach[i])
             includData(result)
+            contTach(result)
+
         }
     }
    
 })
 
 
-function contTach(){
+function contTach(table){
     let countTaches = document.querySelector("#countTaches")    
-    countTaches.innerHTML = dataOfTach.length
+    let countTODO = 0;
+    let countDoing = 0;
+    let countDone = 0;
+    for(let i = 0;i<table.length;i++){
+        if(table[i].statue === "ToDO"){
+            countTODO++;
+        }else if(table[i].statue === "Doing"){
+            countDoing++;
+        }else{
+            countDone++  ;
+        }
+    }
+
+    countTaches.innerHTML = table.length
+    document.querySelector("#countTodo").innerHTML = countTODO
+    document.querySelector("#countDoing").innerHTML = countDoing
+    document.querySelector("#countDone").innerHTML = countDone
+
 }
-contTach()
+contTach(dataOfTach)
+
+
+
+
+
+function filtrage(){
+    
+    document.querySelector("#prioriteFilter").addEventListener('click',()=>{
+        prioriteFilter.style.backgroundColor = '#ebeded'
+        prioriteFilter.style.color = 'black'
+        dateFilter.style.backgroundColor = ''
+        dateFilter.style.color = ''
+        alphabetFilter.style.backgroundColor = ''
+        alphabetFilter.style.color = ''
+
+        let tableP1 =[];
+        let tableP2 =[];
+        let tableP3 =[];
+        let tacheFiltre = [];
+    
+        for(let i = 0 ; i<dataOfTach.length;i++){
+            if(dataOfTach[i].preioriteTache === "P1"){
+                tableP1.push(dataOfTach[i]);    
+            }else if(dataOfTach[i].preioriteTache === "P2"){
+                tableP2.push(dataOfTach[i]);   
+            }else{
+                tableP3.push(dataOfTach[i]);   
+            }
+        }
+        dataOfTach = [...tableP1, ...tableP2, ...tableP3];
+        includData(dataOfTach)
+    })
+
+
+
+    
+    document.querySelector("#dateFilter").addEventListener('click',()=>{
+        dateFilter.style.backgroundColor = '#ebeded'
+        dateFilter.style.color = 'black'
+         prioriteFilter.style.backgroundColor = ''
+        prioriteFilter.style.color = ''
+         alphabetFilter.style.backgroundColor = ''
+        alphabetFilter.style.color = ''
+   
+        for(let i =0 ;i<dataOfTach.length;i++){
+            for(let j = i+1 ; j<dataOfTach.length;j++){
+                if(dataOfTach[i].dateTache < dataOfTach[j].dateTache){
+                    let tmp = dataOfTach[i];
+                    dataOfTach[i] = dataOfTach[j];
+                    dataOfTach[j] = tmp;
+                }
+            }
+        }
+        includData(dataOfTach)
+    })
+
+
+
+
+    document.querySelector("#alphabetFilter").addEventListener('click',()=>{
+        alphabetFilter.style.backgroundColor = '#ebeded'
+        alphabetFilter.style.color = 'black'
+        dateFilter.style.backgroundColor = ''
+        dateFilter.style.color = ''
+         prioriteFilter.style.backgroundColor = ''
+        prioriteFilter.style.color = ''
+        for(let i = 0 ; i<dataOfTach.length;i++){
+             for(let j = i+1 ; j<dataOfTach.length;j++){
+                if(dataOfTach[i].nom.toLowerCase() > dataOfTach[j].nom.toLowerCase()){
+                let tmp = dataOfTach[i];
+                dataOfTach[i] = dataOfTach[j];
+                dataOfTach[j] = tmp;
+              }}
+        }
+        includData(dataOfTach)
+    })
+}
+filtrage()
+
+
+
+
+let drag = null;
+let dragIndex = null;
+function draginDrop() {
+    const taches = document.querySelectorAll(".li-class");
+    const boxs = document.querySelectorAll(".ul-class");
+
+    taches.forEach(tache => {
+        tache.addEventListener('dragstart', function() {
+            drag = tache;
+            tache.style.opacity = '0.5';
+        });
+
+        tache.addEventListener('dragend', function() {
+            drag = null;
+            tache.style.opacity = '1';
+        });
+    });
+
+    for (let i = 0; i < boxs.length; i++) {
+        boxs[i].addEventListener('dragover', function(e) {
+            e.preventDefault();
+        });
+
+        boxs[i].addEventListener('dragleave', function() { });
+
+        boxs[i].addEventListener('drop', function() {
+            this.append(drag);
+            const ulId = this.id;
+            const dragIndex = parseInt(drag.getAttribute("data-index"));
+
+            if (ulId === "tachesTodo") {
+                dataOfTach[dragIndex].statue = "ToDO";
+                localStorage.setItem('tache', JSON.stringify(dataOfTach));
+            } else if (ulId === "tachesDoing") {
+                dataOfTach[dragIndex].statue = "Doing";
+                localStorage.setItem('tache', JSON.stringify(dataOfTach));
+            } else if(ulId === "tachesDone"){
+                dataOfTach[dragIndex].statue = "Done";
+                localStorage.setItem('tache', JSON.stringify(dataOfTach));
+            }
+            includData(dataOfTach);
+            contTach(dataOfTach)
+
+     
+            
+        });
+    }
+}
