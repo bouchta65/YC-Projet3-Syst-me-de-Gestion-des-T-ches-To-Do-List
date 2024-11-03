@@ -137,12 +137,8 @@ function clearData() {
 }
 function deleteData(i) {
     if (result.length > 0) {
-        result.splice(i, 1); 
-
         const originalIndex = dataOfTach.indexOf(result[i]); 
-
         dataOfTach.splice(originalIndex, 1); 
-        
         localStorage.setItem('tache', JSON.stringify(dataOfTach));
         location.reload()
        
