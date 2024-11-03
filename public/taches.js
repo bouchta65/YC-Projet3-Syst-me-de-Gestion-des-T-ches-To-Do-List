@@ -29,7 +29,6 @@ document.querySelector("#formTache").addEventListener('submit' , function(e){
         preioriteTache:preioriteTache.value
     };
     if(mood === "create"){
-        // Add a new task 
         dataOfTach.push(tache);   
     }else{
         dataOfTach[tmpI] = tache
@@ -37,13 +36,12 @@ document.querySelector("#formTache").addEventListener('submit' , function(e){
     }
   
 
-    //save updated array to local storage
     localStorage.setItem('tache', JSON.stringify(dataOfTach));
-    console.log(dataOfTach);
 
     clearData();
     showData(dataOfTach);
     contTach()
+    location.reload();
 
 });
 function clearData(){
