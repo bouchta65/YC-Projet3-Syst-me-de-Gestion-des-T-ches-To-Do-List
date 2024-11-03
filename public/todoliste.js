@@ -119,7 +119,7 @@ document.querySelector("#buttonAjouteTache").addEventListener('click', () => {
     }
 
     localStorage.setItem('tache', JSON.stringify(dataOfTach));
-    console.log(dataOfTach);
+
 
   
     includData(dataOfTach);
@@ -136,39 +136,70 @@ function clearData() {
     description.value = '';
 }
 function deleteData(i) {
-    dataOfTach.splice(i, 1);
-    localStorage.setItem('tache', JSON.stringify(dataOfTach)); 
-    includData(dataOfTach); 
-    contTach(dataOfTach);
-}
+    if (result.length > 0) {
+        result.splice(i, 1); 
 
+        const originalIndex = dataOfTach.indexOf(result[i]); 
+
+        dataOfTach.splice(originalIndex, 1); 
+        
+        localStorage.setItem('tache', JSON.stringify(dataOfTach));
+        location.reload()
+       
+    } else {
+        dataOfTach.splice(i, 1); 
+        localStorage.setItem('tache', JSON.stringify(dataOfTach));
+        includData(dataOfTach)
+        contTach(dataOfTach);
+    }
+}
 function updateData(i) {
     const tacheModal = document.querySelector("#ajouteTacheModal");
     tacheModal.classList.toggle("hidden");
     document.querySelector("#overlay").classList.remove("hidden");
-    nom.value = dataOfTach[i].nom;
-    dateTache.value = dataOfTach[i].dateTache;
-    statue.value = dataOfTach[i].statue;
-    description.value = dataOfTach[i].description;
-    preioriteTache.value = dataOfTach[i].preioriteTache;
+
+    let task;
+    let originalIndex;
+
+    if (result.length > 0) {
+        originalIndex = dataOfTach.indexOf(result[i]); 
+        task = dataOfTach[originalIndex];
+    } else {
+        task = dataOfTach[i];
+        originalIndex = i; 
+    }
+
+    nom.value = task.nom;
+    dateTache.value = task.dateTache;
+    statue.value = task.statue;
+    description.value = task.description;
+    preioriteTache.value = task.preioriteTache;
+
     buttonAjouteTache.innerHTML = "Mise a jour votre tâche";
     titreModal.innerText = "Mise a jour de tâche";
     mood = "update";
-    tmpI = i;
+    tmpI = originalIndex; 
+
+    if (result.length === 0) {
+        includData(dataOfTach);
+        contTach(dataOfTach);
+    }
 }
 
 
 
+let result = [];
 
 document.querySelector("#recherchebut").addEventListener('click',()=>{
+    result = [];
     let rechercherTach = document.querySelector("#rechercheTache").value;
-    let result = [];
+    
     for(let i=0;i<dataOfTach.length;i++){
+        
         if (dataOfTach[i].nom.toLowerCase().includes(rechercherTach.toLowerCase())){
             result.push(dataOfTach[i])
             includData(result)
             contTach(result)
-
         }
     }
    
@@ -185,7 +216,7 @@ function contTach(table){
             countTODO++;
         }else if(table[i].statue === "Doing"){
             countDoing++;
-        }else{
+        }else if(table[i].statue === "Done"){
             countDone++  ;
         }
     }
