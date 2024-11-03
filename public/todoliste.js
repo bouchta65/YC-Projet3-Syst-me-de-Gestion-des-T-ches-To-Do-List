@@ -99,7 +99,8 @@ function includData(taskData) {
 
 
 let titreModal = document.querySelector("#titreModall");
-document.querySelector("#buttonAjouteTache").addEventListener('click', () => {
+document.querySelector("#formTache").addEventListener('submit' , function(e){
+    e.preventDefault(); 
     
     let tache = {
         nom: nom.value,
