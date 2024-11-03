@@ -84,8 +84,8 @@ function showData(taskArray) {
 function deleteData(i){
 dataOfTach.splice(i,1);
 localStorage.tache = JSON.stringify(dataOfTach)
-showData();
-contTach()
+showData(dataOfTach);
+contTach(dataOfTach)
 }
 
 function updateData(i){
