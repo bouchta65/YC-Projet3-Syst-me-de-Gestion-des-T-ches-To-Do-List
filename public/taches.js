@@ -1,27 +1,4 @@
 
-
-// let nom = document.querySelector("#nomTache")
-// let date = document.querySelector("#datetache")
-// let statue = document.querySelector("#statueTach")
-// let description = document.querySelector("#descriptionTache")
-
-// console.log(nom,date,statue,description)
-
-// let dataOfTach = []
-// document.querySelector("#buttonAjouteTache").addEventListener('click',()=>{
-//     let tache = {
-//         nom:nom.value,
-//         date:date.value,
-//         statue:statue.value,
-//         description:description.value
-//     }
-
-//     dataOfTach.push(tache)
-//     localStorage.setItem('tache',JSON.stringify(dataOfTach))
-//     console.log(dataOfTach)
-// })
-
-// Corrected selectors with correct IDs
 let nom = document.querySelector("#nomTache");
 let dateTache = document.querySelector("#dateTache");
 let statue = document.querySelector("#statueTache");
@@ -35,6 +12,7 @@ let dataOfTach = [];
 
 if(localStorage.tache != null){
     dataOfTach = JSON.parse(localStorage.tache) ;
+    showData(dataOfTach);
 
 }else{
     dataOfTach = [];
@@ -64,7 +42,7 @@ document.querySelector("#formTache").addEventListener('submit' , function(e){
     console.log(dataOfTach);
 
     clearData();
-    showData();
+    showData(dataOfTach);
     contTach()
 
 });
@@ -74,36 +52,33 @@ function clearData(){
     statue.value=''
     description.value='';
 }
-function showData(){
+function showData(taskArray) {
     let table = '';
-    for(let i = 0;i<dataOfTach.length; i++){
-     
-    table += `        
-    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-    ${dataOfTach[i].nom}
-    </th>
-    <td class="px-6 py-4">
-    ${dataOfTach[i].dateTache}
-    </td>
-    <td class="px-6 py-4">
-    ${dataOfTach[i].statue}
-    </td>
-    <td class="px-6 py-4">
-    ${dataOfTach[i].description}
-    </td>
-      <td class="px-6 py-4 ${dataOfTach[i].preioriteTache === "P1" ? 'text-red-600' : dataOfTach[i].preioriteTache === "P2" ? 'text-blue-600' : dataOfTach[i].preioriteTache === "P3" ? 'text-yellow-600' : ''}">
-    ${dataOfTach[i].preioriteTache}
-    </td>
-    <td class="flex items-center px-6 py-4">
-        <a href="#" onClick="updateData(${i})" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Modifier</a>
-        <a href="#" onClick="deleteData(${i})" class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">Supprimer</a>
-    </td>
-</tr>`
-}
-document.querySelector("#tbodyTache").innerHTML = table;
-
-    
+    for (let i = 0; i < taskArray.length; i++) {
+        table += `        
+        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                ${taskArray[i].nom}
+            </th>
+            <td class="px-6 py-4">
+                ${taskArray[i].dateTache}
+            </td>
+            <td class="px-6 py-4">
+                ${taskArray[i].statue}
+            </td>
+            <td class="px-6 py-4">
+                ${taskArray[i].description}
+            </td>
+            <td class="px-6 py-4 ${taskArray[i].preioriteTache === "P1" ? 'text-red-600' : taskArray[i].preioriteTache === "P2" ? 'text-blue-600' : taskArray[i].preioriteTache === "P3" ? 'text-yellow-600' : ''}">
+                ${taskArray[i].preioriteTache}
+            </td>
+            <td class="flex items-center px-6 py-4">
+                <a href="#" onClick="updateData(${i})" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Modifier</a>
+                <a href="#" onClick="deleteData(${i})" class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">Supprimer</a>
+            </td>
+        </tr>`;
+    }
+    document.querySelector("#tbodyTache").innerHTML = table;
 }
 
 function deleteData(i){
@@ -129,8 +104,26 @@ function contTach(){
 }
 
 
-showData()
+
 contTach()
+
+document.querySelector("#recherchebut").addEventListener('click',()=>{
+    let rechercherTach = document.querySelector("#rechercheTache").value;
+    let result = [];
+    for(let i=0;i<dataOfTach.length;i++){
+        if (dataOfTach[i].nom.toLowerCase().includes(rechercherTach.toLowerCase())){
+            result.push(dataOfTach[i])
+            showData(result)
+        }
+    }
+   
+})
+
+
+window.onload = function() {
+    showData(dataOfTach);
+    contTach()
+};
 
 
 
